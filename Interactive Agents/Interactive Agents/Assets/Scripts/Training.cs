@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Mission : MonoBehaviour
+public class Training : MonoBehaviour
 {
-
     public int intel, dex, str;
-    public float missionTime, waitTime;
+    public float trainingTime, waitTime;
 
     public GameObject ActiveAgent;
 
-    public enum State { Active, Pending, Idle}
+    public enum State { Active, Pending, Idle }
     State state = State.Idle;
 
     private void Update()
@@ -43,6 +42,4 @@ public class Mission : MonoBehaviour
     {
 
     }
-
-
 }
