@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,10 +11,20 @@ public class Mission : MonoBehaviour
     // timers for mission
     public float missionTime, waitTime;
 
-    public GameObject ActiveAgent;
+    public Agent ActiveAgent;
+
+    // sprite setup for states
+    public SpriteRenderer spriteRen;
+
+    public Sprite idleSprite, pendingSprite, activeSprite;
 
     public enum State { Active, Pending, Idle}
     State state = State.Idle;
+
+    private void Start()
+    {
+        spriteRen = GetComponent<SpriteRenderer>();
+    }
 
     private void Update()
     {
@@ -31,22 +42,32 @@ public class Mission : MonoBehaviour
             case State.Active:
                 ActiveBehavior();
                 break;
-        }
+        }               
     }
 
     // Behaviors for each state
     void IdleBehavior()
     {
-
+        spriteRen.sprite = idleSprite;
     }
     void PendingBehavior()
     {
-
+        spriteRen.sprite = pendingSprite;
     }
     void ActiveBehavior()
     {
-
+        spriteRen.sprite = activeSprite;
     }
 
+    public bool checkActive()
+    {
+        if (ActiveAgent != null) return true;
+        else return false;
+    }    
+
+    public bool checkComplete()
+    {
+        return false;
+    }
 
 }

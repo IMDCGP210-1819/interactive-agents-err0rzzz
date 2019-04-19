@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
+    public GameObject blackboardMan;
+    public Blackboard blackboard;
+
     // stats for this agent
     public int intel, dex, str;
 
     // either Training or Mission target
-    public GameObject ActiveTarget;
+    public Mission ActiveTarget;
 
     // FSM set up
     public enum State {Idle, Mission, Training, Moving}
     State state = State.Idle;
 
+    private void Start()
+    {
+        blackboard = blackboardMan.GetComponent<Blackboard>();
+    }
     private void Update()
     {
         // FSM main operation
@@ -41,7 +48,13 @@ public class Agent : MonoBehaviour
     // Behaviors for each state
     void IdleBehavior()
     {
+        foreach (Mission mission in Blackboard.Missions)
+        {
 
+            if (!mission.checkActive()) ActiveTarget = mission;
+            state = State.Mission;
+            
+        }
     }
     void MissionBehavior()
     {

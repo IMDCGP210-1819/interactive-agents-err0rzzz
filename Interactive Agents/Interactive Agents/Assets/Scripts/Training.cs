@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Training : MonoBehaviour
 {
+
     //training modify Agent's stats
     public int intel, dex, str;
 
@@ -12,6 +13,10 @@ public class Training : MonoBehaviour
 
     //agent using training
     public GameObject ActiveAgent;
+
+
+    // 
+
 
     // FSM setup
     public enum State { Active, Pending, Idle }
