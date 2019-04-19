@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Mission : MonoBehaviour
 {
-
+    // requirements for this mission
     public int intel, dex, str;
+
+    // timers for mission
     public float missionTime, waitTime;
 
     public GameObject ActiveAgent;
@@ -15,6 +17,7 @@ public class Mission : MonoBehaviour
 
     private void Update()
     {
+        // FSM main operation
         switch (state)
         {
             case State.Idle:
@@ -31,6 +34,7 @@ public class Mission : MonoBehaviour
         }
     }
 
+    // Behaviors for each state
     void IdleBehavior()
     {
 

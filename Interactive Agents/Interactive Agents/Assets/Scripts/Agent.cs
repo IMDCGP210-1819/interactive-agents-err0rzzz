@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
+    // stats for this agent
     public int intel, dex, str;
 
-    public GameObject ActiveMission;
+    // either Training or Mission target
+    public GameObject ActiveTarget;
 
+    // FSM set up
     public enum State {Idle, Mission, Training, Moving}
     State state = State.Idle;
 
     private void Update()
     {
+        // FSM main operation
         switch (state)
             {
             case State.Idle:
@@ -34,6 +38,7 @@ public class Agent : MonoBehaviour
         }
     }
 
+    // Behaviors for each state
     void IdleBehavior()
     {
 
