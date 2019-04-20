@@ -9,9 +9,11 @@ public class Agent : MonoBehaviour
 
     // stats for this agent
     public int intel, dex, str;
+    private bool lastMissionSuccess = true;
 
     // either Training or Mission target
     public Mission ActiveTarget;
+    public Training TrainingTarget;
 
     // FSM set up
     public enum State {Idle, Mission, Training, Moving}
@@ -21,8 +23,9 @@ public class Agent : MonoBehaviour
     {
         blackboard = blackboardMan.GetComponent<Blackboard>();
     }
-    private void Update()
+    public void Think()
     {
+        print("thinking" + state.ToString());
         // FSM main operation
         switch (state)
             {
@@ -48,13 +51,47 @@ public class Agent : MonoBehaviour
     // Behaviors for each state
     void IdleBehavior()
     {
-        foreach (Mission mission in Blackboard.Missions)
+        if (lastMissionSuccess)
+        {
+            foreach (Mission mission in Blackboard.Missions)
+            {
+                //if the mission is not active
+                if (!mission.checkActive())
+                {
+                    //make this agent take this mission
+                    ActiveTarget = mission;
+                    state = State.Mission;
+
+                    //tell that mission it is taken
+                    mission.ActiveAgent = this;
+                    mission.setState("Active");
+                    break;
+                }
+            }
+
+            // all missions tested and none avalible, check training
+            foreach (Training trainig in Blackboard.Trainings)
+            {
+                //if the mission is not active
+                if (!trainig.checkActive())
+                {
+                    //make this agent take this mission
+                    TrainingTarget = trainig;
+                    state = State.Training;
+
+                    //tell that mission it is taken
+                    trainig.ActiveAgent = this;
+                    
+                    break;
+                }
+            }
+        }
+
+        if (!lastMissionSuccess)
         {
 
-            if (!mission.checkActive()) ActiveTarget = mission;
-            state = State.Mission;
-            
         }
+        
     }
     void MissionBehavior()
     {

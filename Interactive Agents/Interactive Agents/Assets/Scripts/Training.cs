@@ -12,7 +12,7 @@ public class Training : MonoBehaviour
     public float trainingTime, waitTime;
 
     //agent using training
-    public GameObject ActiveAgent;
+    public Agent ActiveAgent;
 
 
     // 
@@ -54,5 +54,11 @@ public class Training : MonoBehaviour
     void ActiveBehavior()
     {
 
+    }
+
+    public bool checkActive()
+    {
+        if (ActiveAgent != null) return true;
+        else return false;
     }
 }

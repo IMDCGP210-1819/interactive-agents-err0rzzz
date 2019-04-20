@@ -19,7 +19,7 @@ public class Mission : MonoBehaviour
     public Sprite idleSprite, pendingSprite, activeSprite;
 
     public enum State { Active, Pending, Idle}
-    State state = State.Idle;
+    public State state = State.Idle;
 
     private void Start()
     {
@@ -61,7 +61,7 @@ public class Mission : MonoBehaviour
 
     public bool checkActive()
     {
-        if (ActiveAgent != null) return true;
+        if (ActiveAgent != null && state == State.Pending) return true;
         else return false;
     }    
 
@@ -70,4 +70,21 @@ public class Mission : MonoBehaviour
         return false;
     }
 
+    public void setState(string inV)
+    {
+        switch (inV)
+        {
+            case "Idle":
+                state = State.Idle;
+                break;
+
+            case "Pending":
+                state = State.Pending;
+                break;
+
+            case "Active":
+                state = State.Active;
+                break;
+        }
+    }
 }

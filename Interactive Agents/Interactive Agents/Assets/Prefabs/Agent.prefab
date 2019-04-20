@@ -92,7 +92,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f469d43d5858e3408df9281557f1c9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blackboardMan: {fileID: 0}
+  blackboard: {fileID: 0}
   intel: 0
   dex: 0
   str: 0
   ActiveTarget: {fileID: 0}
+  TrainingTarget: {fileID: 0}
