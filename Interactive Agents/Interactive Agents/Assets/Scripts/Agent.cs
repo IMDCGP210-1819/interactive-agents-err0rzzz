@@ -55,8 +55,8 @@ public class Agent : MonoBehaviour
         {
             foreach (Mission mission in Blackboard.Missions)
             {
-                //if the mission is not active
-                if (!mission.checkActive())
+                //if the mission is avalible
+                if (mission.checkAvalible())
                 {
                     //make this agent take this mission
                     ActiveTarget = mission;

@@ -59,9 +59,9 @@ public class Mission : MonoBehaviour
         spriteRen.sprite = activeSprite;
     }
 
-    public bool checkActive()
+    public bool checkAvalible()
     {
-        if (ActiveAgent != null && state == State.Pending) return true;
+        if (ActiveAgent == null && state == State.Pending) return true;
         else return false;
     }    
 

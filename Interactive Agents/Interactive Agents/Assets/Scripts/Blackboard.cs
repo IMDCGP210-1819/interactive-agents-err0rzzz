@@ -24,4 +24,16 @@ public class Blackboard : MonoBehaviour
             agent.Think();
         }
     }
+
+    //public Mission getMission()
+    //{
+    //    foreach (Mission m in Missions)
+    //    {
+    //        if (!m.checkActive())
+    //        {
+    //                   break;
+    //        }
+    //    }
+    //    else return null;
+    //}
 }
