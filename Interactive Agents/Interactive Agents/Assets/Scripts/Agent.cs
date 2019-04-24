@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    public GameObject blackboardMan;
-    public Blackboard blackboard;
+    private GameObject blackboardMan;
+    private Blackboard blackboard;
 
     // stats for this agent
     public string name;
     public int intel, dex, str;
-    private bool lastMissionSuccess = true;
+    public bool lastMissionSuccess = true;
 
     // either Training or Mission target
     public Mission activeMission;
@@ -22,11 +22,11 @@ public class Agent : MonoBehaviour
 
     private void Start()
     {
-        blackboard = blackboardMan.GetComponent<Blackboard>();
+        blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
     }
     public void Think()
     {
-        print(name + "'s state: " + state.ToString());
+
         // FSM main operation
         switch (state)
             {
@@ -66,6 +66,7 @@ public class Agent : MonoBehaviour
                     //tell that mission it is taken
                     mission.ActiveAgent = this;
                     mission.setState("Active");
+
                     break;
                 }
             }
@@ -79,6 +80,7 @@ public class Agent : MonoBehaviour
                     //make this agent take this mission
                     trainingTarget = trainig;
                     state = State.Training;
+
 
                     //tell that mission it is taken
                     trainig.ActiveAgent = this;
@@ -99,6 +101,7 @@ public class Agent : MonoBehaviour
         if (activeMission == null)
         {
             state = State.Idle;
+
         }
     }
     void MovingBehavior()

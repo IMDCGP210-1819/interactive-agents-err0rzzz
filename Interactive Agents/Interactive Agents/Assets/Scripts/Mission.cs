@@ -7,12 +7,16 @@ public class Mission : MonoBehaviour
 {
     // requirements for this mission
     public int intel, dex, str;
+    private int missionsComplete = 0;
 
     // timers for mission
     public float missionTime, waitTime;
     private float missionTimer = 0, waitTimer = 0;
 
     public Agent ActiveAgent;
+
+    private GameObject blackboardMan;
+    private Blackboard blackboard;
 
     // sprite setup for states
     public SpriteRenderer spriteRen;
@@ -25,9 +29,10 @@ public class Mission : MonoBehaviour
     private void Start()
     {
         spriteRen = GetComponent<SpriteRenderer>();
+        blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
     }
 
-    private void Update()
+    public void Think()
     {
         // FSM main operation
         switch (state)
@@ -52,7 +57,7 @@ public class Mission : MonoBehaviour
         spriteRen.sprite = idleSprite;
 
         waitTimer += Time.deltaTime;
-        print(waitTimer.ToString());
+
         if (waitTimer >= waitTime)
         {
             state = State.Pending;
@@ -64,32 +69,26 @@ public class Mission : MonoBehaviour
     {
         spriteRen.sprite = pendingSprite;
     }
+
     void ActiveBehavior()
     {
         spriteRen.sprite = activeSprite;
 
         missionTimer += Time.deltaTime;
-        print(missionTimer.ToString());
+
         if (missionTimer >= missionTime)
         {
-            print("mission complete!");
-            ActiveAgent.activeMission = null;
-            ActiveAgent = null;
-            state = State.Idle;
+            CompleteMission();
             missionTimer = 0;
         }
     }
 
+    // checks if this mission can be allocated to an Agent
     public bool checkAvalible()
     {
         if (ActiveAgent == null && state == State.Pending) return true;
         else return false;
     }    
-
-    //public bool checkComplete()
-    //{
-    //    return false;
-    //}
 
     public void setState(string inV)
     {
@@ -108,4 +107,52 @@ public class Mission : MonoBehaviour
                 break;
         }
     }
+
+
+    // checks if the Agent has the stats to win the mission
+    // then updates Agent and Mission
+    private void CompleteMission()
+    {
+        if (ActiveAgent.str >= str && ActiveAgent.intel >= intel && ActiveAgent.dex >= dex)
+        {
+            print("mission complete: SUCCESS!");
+            ActiveAgent.lastMissionSuccess = true;
+            blackboard.setMoney(50);
+            missionsComplete++;
+            IncreaseDifficulty();
+        }
+
+        else
+        {
+            print("mission complete: FAILURE!");
+            ActiveAgent.lastMissionSuccess = false;
+        }
+
+        ActiveAgent.activeMission = null;
+        ActiveAgent = null;
+        state = State.Idle;
+    }
+
+    // randomly increases one of the stats by the number of successes
+    private  void IncreaseDifficulty()
+    {
+        int rand = UnityEngine.Random.Range(0, 3);
+
+        switch (rand)
+        {
+            case 0:
+                intel += missionsComplete;
+                break;
+
+            case 1:
+                str += missionsComplete;
+                break;
+
+            case 2:
+                dex += missionsComplete;
+                break;
+        }
+
+    }
+
 }

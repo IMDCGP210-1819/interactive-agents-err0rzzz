@@ -8,6 +8,8 @@ public class Blackboard : MonoBehaviour
     public static Training[] Trainings;
     public static Agent[] Agents;
 
+    public int money;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,16 @@ public class Blackboard : MonoBehaviour
         {
             agent.Think();
         }
+
+        foreach (Mission mission in Missions)
+        {
+            mission.Think();
+        }
+    }
+
+    public void setMoney(int a)
+    {
+        money += a;
     }
 
     // disused function to check and return missions
