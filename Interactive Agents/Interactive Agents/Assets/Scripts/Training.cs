@@ -5,24 +5,59 @@ using UnityEngine;
 public class Training : MonoBehaviour
 {
 
-    //training modify Agent's stats
+    // benefitd of this training
     public int intel, dex, str;
+    private int trainingLevel = 0;
 
-    //time for training / between training
+    // timers for mission
     public float trainingTime, waitTime;
+    private float trainingTimer = 0, waitTimer = 0;
 
-    //agent using training
     public Agent ActiveAgent;
 
+    private GameObject blackboardMan;
+    private Blackboard blackboard;
 
-    // 
+    // sprite setup for states
+    public SpriteRenderer spriteRen;
 
+    public Sprite idleSprite, pendingSprite, activeSprite;
 
-    // FSM setup
     public enum State { Active, Pending, Idle }
-    State state = State.Idle;
+    public State state = State.Idle;
 
-    private void Update()
+    private void Start()
+    {
+        spriteRen = GetComponent<SpriteRenderer>();
+        blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
+    }
+
+    // checks if this training can be allocated to an Agent
+    public bool checkAvalible()
+    {
+        if (ActiveAgent == null && state == State.Pending) return true;
+        else return false;
+    }
+    public void setState(string inV)
+    {
+        switch (inV)
+        {
+            case "Idle":
+                state = State.Idle;
+                break;
+
+            case "Pending":
+                state = State.Pending;
+                break;
+
+            case "Active":
+                state = State.Active;
+                break;
+        }
+    }
+
+    // main FSM operation
+    public void Think()
     {
         // FSM main operation
         switch (state)
@@ -41,24 +76,50 @@ public class Training : MonoBehaviour
         }
     }
 
-
     // Behaviors for each state
-    void IdleBehavior()
+    private void IdleBehavior()
     {
+        spriteRen.sprite = idleSprite;
+
+        waitTimer += Time.deltaTime;
+
+        if (waitTimer >= waitTime)
+        {
+            state = State.Pending;
+            waitTimer = 0;
+        }
 
     }
-    void PendingBehavior()
+    private void PendingBehavior()
     {
-
+        spriteRen.sprite = pendingSprite;
     }
-    void ActiveBehavior()
+    private void ActiveBehavior()
     {
+        spriteRen.sprite = activeSprite;
 
+        trainingTimer += Time.deltaTime;
+
+        if (trainingTimer >= trainingTime)
+        {
+            CompleteTraining();
+            trainingTimer = 0;
+        }
     }
 
-    public bool checkActive()
+    // checks if the Agent has the stats to win the mission
+    // then updates Agent and Mission
+    private void CompleteTraining()
     {
-        if (ActiveAgent != null) return true;
-        else return false;
+        print("mission complete: SUCCESS!");
+
+        ActiveAgent.str += str + trainingLevel;
+        ActiveAgent.intel += intel + trainingLevel;
+        ActiveAgent.dex += dex  + trainingLevel;
+
+        ActiveAgent.lastMissionSuccess = true;
+        state = State.Idle;
+
     }
 }
+

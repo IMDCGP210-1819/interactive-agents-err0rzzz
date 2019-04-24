@@ -32,6 +32,31 @@ public class Mission : MonoBehaviour
         blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
     }
 
+    // checks if this mission can be allocated to an Agent
+    public bool checkAvalible()
+    {
+        if (ActiveAgent == null && state == State.Pending) return true;
+        else return false;
+    }    
+    public void setState(string inV)
+    {
+        switch (inV)
+        {
+            case "Idle":
+                state = State.Idle;
+                break;
+
+            case "Pending":
+                state = State.Pending;
+                break;
+
+            case "Active":
+                state = State.Active;
+                break;
+        }
+    }
+
+    // main FSM operation
     public void Think()
     {
         // FSM main operation
@@ -52,7 +77,7 @@ public class Mission : MonoBehaviour
     }
 
     // Behaviors for each state
-    void IdleBehavior()
+    private void IdleBehavior()
     {
         spriteRen.sprite = idleSprite;
 
@@ -65,12 +90,11 @@ public class Mission : MonoBehaviour
         }    
 
     }
-    void PendingBehavior()
+    private void PendingBehavior()
     {
         spriteRen.sprite = pendingSprite;
     }
-
-    void ActiveBehavior()
+    private void ActiveBehavior()
     {
         spriteRen.sprite = activeSprite;
 
@@ -82,32 +106,6 @@ public class Mission : MonoBehaviour
             missionTimer = 0;
         }
     }
-
-    // checks if this mission can be allocated to an Agent
-    public bool checkAvalible()
-    {
-        if (ActiveAgent == null && state == State.Pending) return true;
-        else return false;
-    }    
-
-    public void setState(string inV)
-    {
-        switch (inV)
-        {
-            case "Idle":
-                state = State.Idle;
-                break;
-
-            case "Pending":
-                state = State.Pending;
-                break;
-
-            case "Active":
-                state = State.Active;
-                break;
-        }
-    }
-
 
     // checks if the Agent has the stats to win the mission
     // then updates Agent and Mission
@@ -154,5 +152,10 @@ public class Mission : MonoBehaviour
         }
 
     }
+
+
+
+
+
 
 }

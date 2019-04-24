@@ -30,6 +30,11 @@ public class Blackboard : MonoBehaviour
         {
             mission.Think();
         }
+
+        foreach (Training training in Trainings)
+        {
+            training.Think();
+        }
     }
 
     public void setMoney(int a)

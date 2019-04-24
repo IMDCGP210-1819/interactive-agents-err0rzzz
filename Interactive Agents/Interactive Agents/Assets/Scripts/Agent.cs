@@ -74,8 +74,8 @@ public class Agent : MonoBehaviour
             // all missions tested and none avalible, check training
             foreach (Training trainig in Blackboard.Trainings)
             {
-                //if the mission is not active
-                if (!trainig.checkActive())
+                //if training is avalible
+                if (trainig.checkAvalible())
                 {
                     //make this agent take this mission
                     trainingTarget = trainig;
@@ -108,7 +108,6 @@ public class Agent : MonoBehaviour
     {
 
     }
-
     void TrainingBehavior()
     {
 
