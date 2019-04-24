@@ -8,12 +8,13 @@ public class Agent : MonoBehaviour
     public Blackboard blackboard;
 
     // stats for this agent
+    public string name;
     public int intel, dex, str;
     private bool lastMissionSuccess = true;
 
     // either Training or Mission target
-    public Mission ActiveTarget;
-    public Training TrainingTarget;
+    public Mission activeMission;
+    public Training trainingTarget;
 
     // FSM set up
     public enum State {Idle, Mission, Training, Moving}
@@ -25,7 +26,7 @@ public class Agent : MonoBehaviour
     }
     public void Think()
     {
-        print("thinking" + state.ToString());
+        print(name + "'s state: " + state.ToString());
         // FSM main operation
         switch (state)
             {
@@ -59,7 +60,7 @@ public class Agent : MonoBehaviour
                 if (mission.checkAvalible())
                 {
                     //make this agent take this mission
-                    ActiveTarget = mission;
+                    activeMission = mission;
                     state = State.Mission;
 
                     //tell that mission it is taken
@@ -76,7 +77,7 @@ public class Agent : MonoBehaviour
                 if (!trainig.checkActive())
                 {
                     //make this agent take this mission
-                    TrainingTarget = trainig;
+                    trainingTarget = trainig;
                     state = State.Training;
 
                     //tell that mission it is taken
@@ -95,7 +96,10 @@ public class Agent : MonoBehaviour
     }
     void MissionBehavior()
     {
-
+        if (activeMission == null)
+        {
+            state = State.Idle;
+        }
     }
     void MovingBehavior()
     {

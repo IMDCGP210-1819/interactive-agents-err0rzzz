@@ -25,6 +25,9 @@ public class Blackboard : MonoBehaviour
         }
     }
 
+    // disused function to check and return missions
+    // was building as a fix to a bug elsewhere
+    
     //public Mission getMission()
     //{
     //    foreach (Mission m in Missions)

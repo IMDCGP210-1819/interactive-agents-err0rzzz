@@ -427,6 +427,11 @@ PrefabInstance:
       propertyPath: blackboardMan
       value: 
       objectReference: {fileID: 1165921666}
+    - target: {fileID: 5709531383396919685, guid: e6f3cddedad3acf4cb8ac11d4455fb4d,
+        type: 3}
+      propertyPath: name
+      value: Joe
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6f3cddedad3acf4cb8ac11d4455fb4d, type: 3}
 --- !u!1 &231444967
@@ -997,7 +1002,7 @@ PrefabInstance:
     - target: {fileID: 5286978601645936958, guid: eb2d7e8b211328645bc42f992be40cd1,
         type: 3}
       propertyPath: state
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb2d7e8b211328645bc42f992be40cd1, type: 3}
@@ -2274,6 +2279,11 @@ PrefabInstance:
       propertyPath: str
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5709531383396919685, guid: e6f3cddedad3acf4cb8ac11d4455fb4d,
+        type: 3}
+      propertyPath: name
+      value: Larry
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6f3cddedad3acf4cb8ac11d4455fb4d, type: 3}
 --- !u!1 &1931772680
@@ -2419,6 +2429,11 @@ PrefabInstance:
       propertyPath: str
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5709531383396919685, guid: e6f3cddedad3acf4cb8ac11d4455fb4d,
+        type: 3}
+      propertyPath: name
+      value: Bill
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6f3cddedad3acf4cb8ac11d4455fb4d, type: 3}
 --- !u!1001 &2043799887
@@ -2491,7 +2506,7 @@ PrefabInstance:
     - target: {fileID: 5286978601645936958, guid: eb2d7e8b211328645bc42f992be40cd1,
         type: 3}
       propertyPath: state
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eb2d7e8b211328645bc42f992be40cd1, type: 3}

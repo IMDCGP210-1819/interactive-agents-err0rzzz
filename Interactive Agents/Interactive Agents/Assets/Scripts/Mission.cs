@@ -10,6 +10,7 @@ public class Mission : MonoBehaviour
 
     // timers for mission
     public float missionTime, waitTime;
+    private float missionTimer = 0, waitTimer = 0;
 
     public Agent ActiveAgent;
 
@@ -49,6 +50,15 @@ public class Mission : MonoBehaviour
     void IdleBehavior()
     {
         spriteRen.sprite = idleSprite;
+
+        waitTimer += Time.deltaTime;
+        print(waitTimer.ToString());
+        if (waitTimer >= waitTime)
+        {
+            state = State.Pending;
+            waitTimer = 0;
+        }    
+
     }
     void PendingBehavior()
     {
@@ -57,6 +67,17 @@ public class Mission : MonoBehaviour
     void ActiveBehavior()
     {
         spriteRen.sprite = activeSprite;
+
+        missionTimer += Time.deltaTime;
+        print(missionTimer.ToString());
+        if (missionTimer >= missionTime)
+        {
+            print("mission complete!");
+            ActiveAgent.activeMission = null;
+            ActiveAgent = null;
+            state = State.Idle;
+            missionTimer = 0;
+        }
     }
 
     public bool checkAvalible()
@@ -65,10 +86,10 @@ public class Mission : MonoBehaviour
         else return false;
     }    
 
-    public bool checkComplete()
-    {
-        return false;
-    }
+    //public bool checkComplete()
+    //{
+    //    return false;
+    //}
 
     public void setState(string inV)
     {
