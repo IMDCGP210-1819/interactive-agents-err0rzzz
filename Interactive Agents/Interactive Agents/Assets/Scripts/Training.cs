@@ -99,7 +99,6 @@ public class Training : MonoBehaviour
         spriteRen.sprite = activeSprite;
 
         trainingTimer += Time.deltaTime;
-
         if (trainingTimer >= trainingTime)
         {
             CompleteTraining();
@@ -111,15 +110,18 @@ public class Training : MonoBehaviour
     // then updates Agent and Mission
     private void CompleteTraining()
     {
-        print("mission complete: SUCCESS!");
+        print("Training Complete");
 
         ActiveAgent.str += str + trainingLevel;
         ActiveAgent.intel += intel + trainingLevel;
         ActiveAgent.dex += dex  + trainingLevel;
 
         ActiveAgent.lastMissionSuccess = true;
-        state = State.Idle;
+        ActiveAgent.trainingTarget = null;
 
+        ActiveAgent = null;
+
+        state = State.Idle;
     }
 }
 

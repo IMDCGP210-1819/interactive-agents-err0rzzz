@@ -69,30 +69,29 @@ public class Agent : MonoBehaviour
 
                     break;
                 }
-            }
+            }                   
+            
+        }
 
-            // all missions tested and none avalible, check training
-            foreach (Training trainig in Blackboard.Trainings)
+        else 
+        {
+            foreach (Training training in Blackboard.Trainings)
             {
                 //if training is avalible
-                if (trainig.checkAvalible())
+                if (training.checkAvalible())
                 {
                     //make this agent take this mission
-                    trainingTarget = trainig;
+                    trainingTarget = training;
                     state = State.Training;
 
 
                     //tell that mission it is taken
-                    trainig.ActiveAgent = this;
-                    
+                    training.ActiveAgent = this;
+                    training.setState("Active");
+
                     break;
                 }
             }
-        }
-
-        if (!lastMissionSuccess)
-        {
-
         }
         
     }
@@ -101,7 +100,6 @@ public class Agent : MonoBehaviour
         if (activeMission == null)
         {
             state = State.Idle;
-
         }
     }
     void MovingBehavior()
@@ -110,6 +108,10 @@ public class Agent : MonoBehaviour
     }
     void TrainingBehavior()
     {
+        if (trainingTarget == null)
+        {
+            state = State.Idle;
+        }
 
     }
 

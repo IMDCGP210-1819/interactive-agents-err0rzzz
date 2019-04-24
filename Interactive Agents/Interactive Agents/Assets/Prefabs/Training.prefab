@@ -92,9 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca373b7198026d44bb14250f57314c07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intel: 0
-  dex: 0
-  str: 0
+  intel: 1
+  dex: 1
+  str: 1
   trainingTime: 10
   waitTime: 5
   ActiveAgent: {fileID: 0}
