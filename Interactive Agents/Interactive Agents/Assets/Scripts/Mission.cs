@@ -9,6 +9,8 @@ public class Mission : MonoBehaviour
     public int intel, dex, str;
     private int missionsComplete = 0;
 
+    public string myName;
+
     // timers for mission
     public float missionTime, waitTime;
     private float missionTimer = 0, waitTimer = 0;
@@ -17,6 +19,7 @@ public class Mission : MonoBehaviour
 
     private GameObject blackboardMan;
     private Blackboard blackboard;
+    private UI ui;
 
     // sprite setup for states
     public SpriteRenderer spriteRen;
@@ -30,6 +33,7 @@ public class Mission : MonoBehaviour
     {
         spriteRen = GetComponent<SpriteRenderer>();
         blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
+        ui = GameObject.Find("GUI").GetComponent<UI>();
     }
 
     // checks if this mission can be allocated to an Agent
@@ -153,7 +157,10 @@ public class Mission : MonoBehaviour
 
     }
 
-
+    private void OnMouseDown()
+    {
+        ui.UpdateUI(this.GetType().ToString(), myName, dex.ToString(), str.ToString(), intel.ToString(), "Missions Complere: ", "Time left: ", state.ToString(), missionsComplete.ToString(), missionTimer.ToString());
+    }
 
 
 

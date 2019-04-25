@@ -6,9 +6,10 @@ public class Agent : MonoBehaviour
 {
     private GameObject blackboardMan;
     private Blackboard blackboard;
+    private UI ui;
 
     // stats for this agent
-    public string name;
+    public string myName;
     public int intel, dex, str;
     public bool lastMissionSuccess = true;
 
@@ -23,6 +24,7 @@ public class Agent : MonoBehaviour
     private void Start()
     {
         blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
+        ui = GameObject.Find("GUI").GetComponent<UI>();
     }
     public void Think()
     {
@@ -115,4 +117,8 @@ public class Agent : MonoBehaviour
 
     }
 
+    private void OnMouseDown()
+    {
+        ui.UpdateUI(this.GetType().ToString(), myName, dex.ToString(), str.ToString(), intel.ToString(), "Last mission success? ", "unused", state.ToString(), lastMissionSuccess.ToString(), "unused");
+    }
 }

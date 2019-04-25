@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 673328294367956462}
   - component: {fileID: 5517531349590439851}
   - component: {fileID: 5286978601645936958}
+  - component: {fileID: 7586141148561647598}
   m_Layer: 0
   m_Name: Mission
   m_TagString: Untagged
@@ -95,6 +96,7 @@ MonoBehaviour:
   intel: 0
   dex: 0
   str: 0
+  myName: 
   missionTime: 0
   waitTime: 0
   ActiveAgent: {fileID: 0}
@@ -102,3 +104,30 @@ MonoBehaviour:
   idleSprite: {fileID: 21300000, guid: 62f4de5d2123f544f98550ee8c97f01c, type: 3}
   pendingSprite: {fileID: 21300000, guid: 54db201c97011074bb254fdfda771c79, type: 3}
   activeSprite: {fileID: 21300000, guid: a8717d50bec0b8b47865ccf42662d3ab, type: 3}
+  state: 2
+--- !u!61 &7586141148561647598
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1161627181027059537}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.88, y: 3.93}
+    newSize: {x: 2.88, y: 3.93}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.88, y: 3.93}
+  m_EdgeRadius: 0

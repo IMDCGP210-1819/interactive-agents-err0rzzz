@@ -13,10 +13,13 @@ public class Training : MonoBehaviour
     public float trainingTime, waitTime;
     private float trainingTimer = 0, waitTimer = 0;
 
+    public string myName;
+
     public Agent ActiveAgent;
 
     private GameObject blackboardMan;
     private Blackboard blackboard;
+    private UI ui;
 
     // sprite setup for states
     public SpriteRenderer spriteRen;
@@ -30,6 +33,7 @@ public class Training : MonoBehaviour
     {
         spriteRen = GetComponent<SpriteRenderer>();
         blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
+        ui = GameObject.Find("GUI").GetComponent<UI>();
     }
 
     // checks if this training can be allocated to an Agent
@@ -122,6 +126,11 @@ public class Training : MonoBehaviour
         ActiveAgent = null;
 
         state = State.Idle;
+    }
+
+    private void OnMouseDown()
+    {
+        ui.UpdateUI(this.GetType().ToString(), myName, dex.ToString(), str.ToString(), intel.ToString(), "Training Level: ", "Completion: ", state.ToString(), trainingLevel.ToString(), (trainingTimer/trainingTime*100).ToString("n2")+"%");
     }
 }
 
