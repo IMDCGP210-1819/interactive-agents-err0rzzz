@@ -40,38 +40,131 @@ public class Grid : MonoBehaviour
                 {
                     Wall = false;
                 }
-
                 grid[x, y] = new Node(Wall, worldPoint, x, y);
             }
         }
     }
 
+    public Node NodeFromWorldPosition(Vector3 posIn)
+    {
+        float xPoint = ((posIn.x + gridWorldSize.x / 2) / gridWorldSize.x);
+        float yPoint = ((posIn.y + gridWorldSize.y / 2) / gridWorldSize.y);
+
+        xPoint = Mathf.Clamp01(xPoint);
+        yPoint = Mathf.Clamp01(yPoint);
+
+        int x = Mathf.RoundToInt((gridSizeX - 1) * xPoint);
+        int y = Mathf.RoundToInt((gridSizeY - 1) * yPoint);
+
+        return grid[x, y];
+
+    }
+
+    public List<Node> GetNeighbors(Node inNode)
+    {
+        List<Node> neighborNodes = new List<Node>();
+        int xCheck;
+        int yCheck;
+
+
+        // right
+        xCheck = inNode.gridX + 1;
+        yCheck = inNode.gridY;
+        if ((xCheck >= 0 && xCheck < gridSizeX) && (yCheck >= 0 && yCheck < gridSizeY))
+        {
+            neighborNodes.Add(grid[xCheck, yCheck]);
+        }
+
+        // left
+        xCheck = inNode.gridX - 1;
+        yCheck = inNode.gridY;
+        if ((xCheck >= 0 && xCheck < gridSizeX) && (yCheck >= 0 && yCheck < gridSizeY))
+        {
+            neighborNodes.Add(grid[xCheck, yCheck]);
+        }
+
+        // up
+        xCheck = inNode.gridX;
+        yCheck = inNode.gridY + 1;
+        if ((xCheck >= 0 && xCheck < gridSizeX) && (yCheck >= 0 && yCheck < gridSizeY))
+        {
+            neighborNodes.Add(grid[xCheck, yCheck]);
+        }
+
+        // down
+        xCheck = inNode.gridX;
+        yCheck = inNode.gridY - 1;
+        if ((xCheck >= 0 && xCheck < gridSizeX) && (yCheck >= 0 && yCheck < gridSizeY))
+        {
+            neighborNodes.Add(grid[xCheck, yCheck]);
+        }
+
+        return neighborNodes;
+    }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 0));
+
+    //    if (grid != null)
+    //    {
+    //        foreach (Node node in grid)
+    //        {
+    //            if (node.isWall)
+    //            {
+    //                Gizmos.color = Color.white;
+    //            }
+
+    //            else
+    //            {
+    //                Gizmos.color = Color.yellow;
+    //            }
+
+    //            if (FinalPath != null)
+    //            {
+    //                if (FinalPath.Contains(node))//If the current node is in the final path
+    //                {
+    //                    Gizmos.color = Color.red;//Set the color of that node
+    //                    Gizmos.color = Color.red;
+    //                }
+
+    //                Gizmos.DrawCube(node.position, Vector3.one * (nodeDiameter - distance));
+
+    //            }
+    //        }
+    //    }
+    //}
+
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 0));
 
-        if (grid != null)
+        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));//Draw a wire cube with the given dimensions from the Unity inspector
+
+        if (grid != null)//If the grid is not empty
         {
-            foreach (Node node in grid)
+            foreach (Node n in grid)//Loop through every node in the grid
             {
-                if (node.isWall)
+                if (n.isWall)//If the current node is a wall node
                 {
-                    Gizmos.color = Color.white;
+                    Gizmos.color = Color.white;//Set the color of the node
                 }
-
                 else
                 {
-                    Gizmos.color = Color.yellow;
+                    Gizmos.color = Color.yellow;//Set the color of the node
                 }
 
-                if (FinalPath != null)
+
+                if (FinalPath != null)//If the final path is not empty
                 {
-                    Gizmos.color = Color.red;
+                    if (FinalPath.Contains(n))//If the current node is in the final path
+                    {
+                        Gizmos.color = Color.red;//Set the color of that node
+                    }
+
                 }
 
-                Gizmos.DrawCube(node.position, Vector3.one * (nodeDiameter - distance));
 
-
+                Gizmos.DrawCube(n.position, Vector3.one * (nodeDiameter - distance));//Draw the node at the position of the node.
             }
         }
     }
