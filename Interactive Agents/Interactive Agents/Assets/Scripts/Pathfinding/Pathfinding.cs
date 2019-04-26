@@ -13,12 +13,21 @@ public class Pathfinding : MonoBehaviour
         grid = GetComponent<Grid>();
     }
 
-    private void Update()
+    //private void Update()
+    //{
+    //    FindPath(startPos.position, targetPos.position);
+    //}
+
+    public List<Node> getPath(Vector3 startPos, Vector3 endPos)
     {
-        FindPath(startPos.position, targetPos.position);
+        FindPath(startPos, endPos);
+        List<Node> retList = new List<Node>();
+        retList = grid.FinalPath;
+            
+        return retList;
     }
 
-    void FindPath(Vector3 startSearch, Vector3 targetSearch)
+    public void FindPath(Vector3 startSearch, Vector3 targetSearch)
     {
         Node startNode = grid.NodeFromWorldPosition(startSearch);
         Node targetNode = grid.NodeFromWorldPosition(targetSearch);
