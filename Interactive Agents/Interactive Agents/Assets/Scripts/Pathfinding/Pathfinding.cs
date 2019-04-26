@@ -8,9 +8,11 @@ public class Pathfinding : MonoBehaviour
     public Transform startPos;
     public Transform targetPos;
 
+    public List<Node> finalPath;
+
     private void Start()
     {
-        grid = GetComponent<Grid>();
+        grid = GameObject.Find("PathingManager").GetComponent<Grid>();
     }
 
     //private void Update()
@@ -22,7 +24,7 @@ public class Pathfinding : MonoBehaviour
     {
         FindPath(startPos, endPos);
         List<Node> retList = new List<Node>();
-        retList = grid.FinalPath;
+        retList = finalPath;
             
         return retList;
     }
@@ -94,6 +96,7 @@ public class Pathfinding : MonoBehaviour
         }
 
         FinalPath.Reverse();
+        finalPath = FinalPath;
         grid.FinalPath = FinalPath;
     }
 

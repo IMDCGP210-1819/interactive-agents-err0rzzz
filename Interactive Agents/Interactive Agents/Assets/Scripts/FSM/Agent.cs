@@ -31,7 +31,7 @@ public class Agent : MonoBehaviour
     {
         blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
         ui = GameObject.Find("GUI").GetComponent<UI>();
-        pathFinder = GameObject.Find("PathingManager").GetComponent<Pathfinding>();
+        pathFinder = GetComponent<Pathfinding>();
     }
     public void Think()
     {
@@ -72,13 +72,10 @@ public class Agent : MonoBehaviour
                     activeMission = mission;
                     trainingTarget = null;
                     nextTarget = mission.transform.position;
-                    movementPath = pathFinder.getPath(transform.position, nextTarget);
                     state = State.Moving;
 
                     //tell that mission it is taken
                     mission.ActiveAgent = this;
-                    mission.setState("Active");
-
                     break;
                 }
             }                   
@@ -96,14 +93,10 @@ public class Agent : MonoBehaviour
                     trainingTarget = training;
                     activeMission = null;
                     nextTarget = training.transform.position;
-                    movementPath = pathFinder.getPath(transform.position, nextTarget);
                     state = State.Moving;
-
-
+                    
                     //tell that mission it is taken
-                    training.ActiveAgent = this;
-                    training.setState("Active");
-
+                    training.ActiveAgent = this;                    
                     break;
                 }
             }
@@ -141,14 +134,23 @@ public class Agent : MonoBehaviour
 
         if (movementPath.Count > 0)
         {
-            transform.position = Vector3.Lerp(moveFrom, moveNext.position, moveAlpha);
-            moveAlpha -= Time.deltaTime;
+            transform.position = Vector3.Lerp(moveFrom, moveNext.position, 1f - moveAlpha);
+            moveAlpha -= Time.deltaTime * 2 ;
         }
 
         if (nextTarget == moveFrom)
         {
-            if (trainingTarget != null) state = State.Training;
-            if (activeMission != null) state = State.Mission;
+            if (trainingTarget != null)
+            {
+                state = State.Training;
+                trainingTarget.setState("Active");
+            }
+
+            if (activeMission != null)
+            {
+                state = State.Mission;
+                activeMission.setState("Active");
+            }
         }
     }
     void TrainingBehavior()
