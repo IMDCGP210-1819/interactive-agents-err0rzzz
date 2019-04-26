@@ -18,10 +18,10 @@ public class Pathfinding : MonoBehaviour
         FindPath(startPos.position, targetPos.position);
     }
 
-    void FindPath(Vector3 start, Vector3 target)
+    void FindPath(Vector3 startSearch, Vector3 targetSearch)
     {
-        Node startNode = grid.NodeFromWorldPosition(start);
-        Node targetNode = grid.NodeFromWorldPosition(target);
+        Node startNode = grid.NodeFromWorldPosition(startSearch);
+        Node targetNode = grid.NodeFromWorldPosition(targetSearch);
 
         List<Node> OpenList = new List<Node>();
         HashSet<Node> ClosedList = new HashSet<Node>();
@@ -33,37 +33,38 @@ public class Pathfinding : MonoBehaviour
             Node currentNode = OpenList[0];
             for (int i = 1; i < OpenList.Count; i++)
             {
-                if (OpenList[i].costs.f < currentNode.costs.f || (OpenList[i].costs.f == currentNode.costs.f && OpenList[i].costs.h < currentNode.costs.h))
+                if (OpenList[i].fCost < currentNode.fCost || (OpenList[i].fCost == currentNode.fCost && OpenList[i].hCost < currentNode.hCost))
                 {
                     currentNode = OpenList[i];
                 }
             }
-
             OpenList.Remove(currentNode);
             ClosedList.Add(currentNode);
 
             if (currentNode == targetNode)
             {
                 GetFinalPath(startNode, targetNode);
+                break;
             }
 
-            foreach (Node optionNode in grid.GetNeighbors(currentNode))
+            foreach (Node neighborNode in grid.GetNeighbors(currentNode))
             {
-                if (!optionNode.isWall || ClosedList.Contains(optionNode))
+                if (!neighborNode.isWall || ClosedList.Contains(neighborNode))
                 {
                     continue;
                 }
-                int MoveCost = currentNode.costs.g + GetManhattenDistance(currentNode, optionNode);
 
-                if (MoveCost < optionNode.costs.g || !OpenList.Contains(optionNode))
+                int MoveCost = currentNode.gCost + GetManhattenDistance(currentNode, neighborNode);
+                
+                if (MoveCost < neighborNode.fCost || !OpenList.Contains(neighborNode))
                 {
-                    optionNode.costs.g = MoveCost;
-                    optionNode.costs.h = GetManhattenDistance(optionNode, targetNode);
-                    optionNode.parent = currentNode;
+                    neighborNode.gCost = MoveCost;
+                    neighborNode.hCost = GetManhattenDistance(neighborNode, targetNode);
+                    neighborNode.parent = currentNode;
 
-                    if (!OpenList.Contains(optionNode))
+                    if (!OpenList.Contains(neighborNode))
                     {
-                        OpenList.Add(optionNode);
+                        OpenList.Add(neighborNode);
                     }
                 }
             }
@@ -72,7 +73,7 @@ public class Pathfinding : MonoBehaviour
         }
     }
 
-    void GetFinalPath( Node start, Node end)
+    void GetFinalPath(Node start, Node end)
     {
         List<Node> FinalPath = new List<Node>();
         Node CurrentNode = end;
@@ -89,10 +90,10 @@ public class Pathfinding : MonoBehaviour
 
     private int GetManhattenDistance(Node inA, Node inB)
     {
-        int ix = Mathf.Abs(inA.gridX - inB.gridX);
-        int iy = Mathf.Abs(inA.gridY - inB.gridY);
+        int x = Mathf.Abs(inA.gridX - inB.gridX);
+        int y = Mathf.Abs(inA.gridY - inB.gridY);
 
-        return ix + iy;
+        return x + y;
     }
 }
 

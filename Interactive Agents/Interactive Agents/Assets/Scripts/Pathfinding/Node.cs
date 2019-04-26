@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Costs
-{
-    public int g { get; set; }
-    public int h { get; set; }
-    public int f { get; set; }
+//public class Costs
+//{
+//    public int g { get; set; }
+//    public int h { get; set; }
+//    public int f { get; set; }
     
-    public void SetCosts (int gCost, int hCost)
-    {
-        g = gCost;
-        h = hCost;
-        f = gCost + hCost;
-    }
-}
+//    public void SetCosts (int gCost, int hCost)
+//    {
+//        g = gCost;
+//        h = hCost;
+//        f = gCost + hCost;
+//    }
+//}
 
 public class Node
 {
@@ -22,7 +22,13 @@ public class Node
     public bool isWall;
     public Vector3 position;
     public Node parent;
-    public Costs costs;
+    //public Costs costs;
+    public int gCost, hCost;
+
+    public int fCost { get { return gCost + hCost; } }
+
+
+
 
     public Node (bool inWall, Vector3 inPos, int inGridX, int inGridY)
     {
