@@ -102,38 +102,7 @@ public class Grid : MonoBehaviour
         return neighborNodes;
     }
 
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 0));
 
-    //    if (grid != null)
-    //    {
-    //        foreach (Node node in grid)
-    //        {
-    //            if (node.isWall)
-    //            {
-    //                Gizmos.color = Color.white;
-    //            }
-
-    //            else
-    //            {
-    //                Gizmos.color = Color.yellow;
-    //            }
-
-    //            if (FinalPath != null)
-    //            {
-    //                if (FinalPath.Contains(node))//If the current node is in the final path
-    //                {
-    //                    Gizmos.color = Color.red;//Set the color of that node
-    //                    Gizmos.color = Color.red;
-    //                }
-
-    //                Gizmos.DrawCube(node.position, Vector3.one * (nodeDiameter - distance));
-
-    //            }
-    //        }
-    //    }
-    //}
 
     private void OnDrawGizmos()
     {

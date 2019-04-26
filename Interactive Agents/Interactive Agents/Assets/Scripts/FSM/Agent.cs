@@ -17,7 +17,8 @@ public class Agent : MonoBehaviour
     private List<Node> movementPath = new List<Node>();
     float moveAlpha;
     private Vector3 nextTarget, moveFrom;
-    private Node moveNext;
+    private Node moveNext, moveLast;
+    private bool newTarget;
 
     // either Training or Mission target
     public Mission activeMission;
@@ -72,6 +73,7 @@ public class Agent : MonoBehaviour
                     activeMission = mission;
                     trainingTarget = null;
                     nextTarget = mission.transform.position;
+                    newTarget = true;
                     state = State.Moving;
 
                     //tell that mission it is taken
@@ -93,6 +95,7 @@ public class Agent : MonoBehaviour
                     trainingTarget = training;
                     activeMission = null;
                     nextTarget = training.transform.position;
+                    newTarget = true;
                     state = State.Moving;
                     
                     //tell that mission it is taken
@@ -106,31 +109,53 @@ public class Agent : MonoBehaviour
     void MissionBehavior()
     {
         if (activeMission == null)
-        {
-            state = State.Idle;
+        {            
+            state = State.Moving;
+
         }
     }
     void MovingBehavior()
     {
-        // if there is no current path, get one
-        if (movementPath == null)
+
+        if (newTarget)
         {
+            newTarget = false;
             movementPath = pathFinder.getPath(transform.position, nextTarget);
+            if (movementPath.Count!= 0) moveLast = movementPath[movementPath.Count -1];
         }
 
-        if (movementPath.Count == 0)
+        if (moveNext != null)
         {
-            movementPath = pathFinder.getPath(transform.position, nextTarget);
+            if (moveNext == moveLast)
+            {
+                
+                if (trainingTarget != null)
+                {
+                    state = State.Training;
+                    trainingTarget.setState("Active");
+                    movementPath.Clear();
+                    return;
+                }
+
+                if (activeMission != null)
+                {
+                    state = State.Mission;
+                    activeMission.setState("Active");
+                    movementPath.Clear();
+                    return;
+                }
+            }
         }
 
-        // if ready to set next step
+            // if ready to set next step
         if (moveAlpha <= 0)
-        {
+           {
             moveNext = movementPath[0];
             movementPath.RemoveAt(0);
             moveAlpha = 1f;
             moveFrom = transform.position;
-        }
+
+           }
 
         if (movementPath.Count > 0)
         {
@@ -138,20 +163,6 @@ public class Agent : MonoBehaviour
             moveAlpha -= Time.deltaTime * 2 ;
         }
 
-        if (nextTarget == moveFrom)
-        {
-            if (trainingTarget != null)
-            {
-                state = State.Training;
-                trainingTarget.setState("Active");
-            }
-
-            if (activeMission != null)
-            {
-                state = State.Mission;
-                activeMission.setState("Active");
-            }
-        }
     }
     void TrainingBehavior()
     {
