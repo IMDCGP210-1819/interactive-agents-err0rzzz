@@ -109,9 +109,9 @@ public class Agent : MonoBehaviour
     void MissionBehavior()
     {
         if (activeMission == null)
-        {            
-            state = State.Moving;
-
+        {
+            
+            state = State.Idle;
         }
     }
     void MovingBehavior()
