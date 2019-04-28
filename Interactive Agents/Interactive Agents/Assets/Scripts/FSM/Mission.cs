@@ -17,7 +17,7 @@ public class Mission : MonoBehaviour
 
     public Agent ActiveAgent;
 
-    private GameObject blackboardMan;
+   // private GameObject blackboardMan;
     private Blackboard blackboard;
     private UI ui;
 

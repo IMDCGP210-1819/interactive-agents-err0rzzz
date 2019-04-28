@@ -5,11 +5,11 @@ using UnityEngine;
 public class Spy : MonoBehaviour
 {
     public float fleeDistance, wallDistance;
-    public float fleeWeight, seekWeight, wallAvoidWeight;
+    public float fleeWeight, seekWeight, wallAvoidWeight, speed;
 
     public LayerMask wallMask;
 
-    private float fleeCount;
+    private float wallweightInclude;
 
     private GameObject Mainframe;
 
@@ -49,17 +49,20 @@ public class Spy : MonoBehaviour
             Vector3 heading = (contact.transform.position - transform.position);
             float distance = heading.magnitude;
             calcMove += (heading / distance) * wallAvoidWeight;
+            wallweightInclude = wallAvoidWeight;
         }
+        else wallweightInclude = 0;
 
 
         // seek mainframe
         calcMove += (Mainframe.transform.position - transform.position) * seekWeight;
+        calcMove /= (fleeWeight + seekWeight + wallweightInclude);
         
         return calcMove;
     }
 
     void Update()
     {
-        transform.Translate(CalculateMove()*Time.deltaTime);
+        transform.Translate(CalculateMove()*Time.deltaTime*speed);
     }
 }
