@@ -36,7 +36,7 @@ public class Grid : MonoBehaviour
                 Vector3 worldPoint = bottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                 bool Wall = true;
 
-                if (Physics2D.OverlapCircle(worldPoint, nodeRadius, wallMask))
+                if (Physics2D.OverlapCircle(worldPoint, nodeRadius/2, wallMask))
                 {
                     Wall = false;
                 }
