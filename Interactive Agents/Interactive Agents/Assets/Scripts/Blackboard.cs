@@ -7,6 +7,7 @@ public class Blackboard : MonoBehaviour
     public static Mission[] Missions;
     public static Training[] Trainings;
     public static Agent[] Agents;
+    public static Chair[] Chairs;
 
     public int money;
 
@@ -16,6 +17,7 @@ public class Blackboard : MonoBehaviour
         Missions = FindObjectsOfType<Mission>();
         Trainings = FindObjectsOfType<Training>();
         Agents = FindObjectsOfType<Agent>();
+        Chairs = FindObjectsOfType<Chair>();
 
     }
 
