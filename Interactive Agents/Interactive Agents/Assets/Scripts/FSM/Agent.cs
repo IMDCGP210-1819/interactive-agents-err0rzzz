@@ -194,8 +194,9 @@ public class Agent : MonoBehaviour
                     case Movetarget.Mainframe:
                         state = State.Idle;
                         MoveTarget = Movetarget.Mission;
+                        if (myChair!= null) { 
                         myChair.isAvalible = true;
-                        myChair = null;
+                        myChair = null;}
                         return;
 
                     case Movetarget.Training:
