@@ -17,8 +17,8 @@ public class Training : MonoBehaviour
 
     public Agent ActiveAgent;
 
-    private GameObject blackboardMan;
-    private Blackboard blackboard;
+  //  private GameObject blackboardMan;
+  //  private Blackboard blackboard;
     private UI ui;
 
     // sprite setup for states
@@ -32,7 +32,7 @@ public class Training : MonoBehaviour
     private void Start()
     {
         spriteRen = GetComponent<SpriteRenderer>();
-        blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
+     //   blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
         ui = GameObject.Find("GUI").GetComponent<UI>();
     }
 

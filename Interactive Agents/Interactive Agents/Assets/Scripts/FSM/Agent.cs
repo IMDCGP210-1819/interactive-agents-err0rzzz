@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Agent : MonoBehaviour
 {
-    private GameObject blackboardMan;
-    private Blackboard blackboard;
+   // private Blackboard blackboard;
     private UI ui;
     private Pathfinding pathFinder;
     private Vector3 mainframe;
@@ -37,7 +36,7 @@ public class Agent : MonoBehaviour
 
     private void Start()
     {
-        blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
+       // blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
         ui = GameObject.Find("GUI").GetComponent<UI>();
         pathFinder = GetComponent<Pathfinding>();
         mainframe = GameObject.Find("Mainframe").GetComponent<Transform>().position;
