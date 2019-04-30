@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spy : MonoBehaviour
 {
+    private UI ui;
     public float fleeDistance, wallDistance;
     public float fleeWeight, seekWeight, wallAvoidWeight, speed;
 
@@ -16,6 +17,7 @@ public class Spy : MonoBehaviour
     private void Start()
     {
         Mainframe = GameObject.Find ("Mainframe");
+        ui = GameObject.Find("GUI").GetComponent<UI>();
     }
 
     public Vector3 CalculateMove()
@@ -64,5 +66,10 @@ public class Spy : MonoBehaviour
     void Update()
     {
         transform.Translate(CalculateMove()*Time.deltaTime*speed);
+    }
+
+    private void OnMouseDown()
+    {
+        ui.UpdateUI(this.GetType().ToString(), "Lisa" , "n/a", "n/a", "n/a", "Trying to hack Mainframe", "- ", "Steering", "-", "-");
     }
 }

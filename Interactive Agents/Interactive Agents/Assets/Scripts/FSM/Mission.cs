@@ -5,15 +5,18 @@ using UnityEngine;
 
 public class Mission : MonoBehaviour
 {
+    
+
     // requirements for this mission
     public int intel, dex, str;
     private int missionsComplete = 0;
 
     public string myName;
+    public bool isBought = true;
 
     // timers for mission
     public float missionTime, waitTime;
-    private float missionTimer = 0, waitTimer = 0;
+    public float missionTimer = 0, waitTimer = 0;
 
     public Agent ActiveAgent;
 
@@ -22,16 +25,16 @@ public class Mission : MonoBehaviour
     private UI ui;
 
     // sprite setup for states
-    public SpriteRenderer spriteRen;
+   // public SpriteRenderer spriteRen;
 
-    public Sprite idleSprite, pendingSprite, activeSprite;
+  //  public Sprite idleSprite, pendingSprite, activeSprite;
 
     public enum State { Active, Pending, Idle}
-    public State state = State.Idle;
+    public State state = State.Pending;
 
     private void Start()
     {
-        spriteRen = GetComponent<SpriteRenderer>();
+      //  spriteRen = GetComponent<SpriteRenderer>();
         blackboard = GameObject.Find("BlackboardManager").GetComponent<Blackboard>();
         ui = GameObject.Find("GUI").GetComponent<UI>();
     }
@@ -83,9 +86,9 @@ public class Mission : MonoBehaviour
     // Behaviors for each state
     private void IdleBehavior()
     {
-        spriteRen.sprite = idleSprite;
+        //spriteRen.sprite = idleSprite;
 
-        waitTimer += Time.deltaTime;
+        if (isBought) waitTimer += Time.deltaTime;
 
         if (waitTimer >= waitTime)
         {
@@ -96,11 +99,11 @@ public class Mission : MonoBehaviour
     }
     private void PendingBehavior()
     {
-        spriteRen.sprite = pendingSprite;
+      //  spriteRen.sprite = pendingSprite;
     }
     private void ActiveBehavior()
     {
-        spriteRen.sprite = activeSprite;
+     //   spriteRen.sprite = activeSprite;
 
         missionTimer += Time.deltaTime;
 
